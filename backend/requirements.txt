@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pymongo
+python-dotenv
+python-multipart
+opencv-python
+Pillow
+imagehash
+httpx
