@@ -39,3 +39,11 @@ Run:
 Pages:
 - `/` dashboard with authority selector and media listing
 - `/media/[mediaId]` detail with summary, leakage, timeline, propagation graph
+
+## Submission Prototype UI
+
+A standalone prototype is available in `prototype-ui/` to present the complete end-to-end system flow as a shareable demo link.
+
+Run locally:
+1. `cd prototype-ui`
+2. Open `index.html` in browser
