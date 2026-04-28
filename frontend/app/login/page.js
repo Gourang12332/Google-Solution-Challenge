@@ -29,7 +29,7 @@ export default function LoginPage() {
       return
     }
     setSessionAuthority(found)
-    window.location.href = "/"
+    window.location.href = "/dashboard"
   }
 
   return (

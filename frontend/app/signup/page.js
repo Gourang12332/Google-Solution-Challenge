@@ -20,7 +20,7 @@ export default function SignupPage() {
       const payload = { authority_id: authorityId.trim(), name: name.trim() }
       const created = await apiService.createAuthority(payload)
       setSessionAuthority(created)
-      window.location.href = "/"
+      window.location.href = "/dashboard"
     } catch (err) {
       setError(err?.response?.data?.detail || "Could not create authority")
     } finally {

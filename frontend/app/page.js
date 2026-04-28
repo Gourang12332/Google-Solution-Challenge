@@ -1,106 +1,64 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import Link from "next/link"
 import AppShell from "../components/AppShell"
-import { getSessionAuthority } from "../components/auth"
-import { apiService } from "../components/apiService"
-
-export default function Dashboard() {
-  const [authority, setAuthority] = useState(null)
-  const [media, setMedia] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [stats, setStats] = useState({ totalMedia: 0, totalDetections: 0, totalLeakage: 0 })
-  const [dbHealth, setDbHealth] = useState(null)
-
-  useEffect(() => {
-    setAuthority(getSessionAuthority())
-  }, [])
-
-  useEffect(() => {
-    if (!authority?.authority_id) return
-    setLoading(true)
-    apiService
-      .listMedia(authority.authority_id)
-      .then((items) => setMedia(items))
-      .finally(() => setLoading(false))
-  }, [authority])
-
-  useEffect(() => {
-    if (!media.length) {
-      setStats({ totalMedia: 0, totalDetections: 0, totalLeakage: 0 })
-      return
-    }
-    Promise.all(media.map((m) => apiService.getSummary(m.media_id)))
-      .then((summaries) => {
-        setStats({
-          totalMedia: media.length,
-          totalDetections: summaries.reduce((acc, s) => acc + (s.total_detections || 0), 0),
-          totalLeakage: summaries.reduce((acc, s) => acc + (s.total_leakage || 0), 0),
-        })
-      })
-      .catch(() => {
-        setStats({ totalMedia: media.length, totalDetections: 0, totalLeakage: 0 })
-      })
-  }, [media])
-
-  useEffect(() => {
-    apiService.getDbHealth().then(setDbHealth).catch(() => setDbHealth(null))
-  }, [])
+export default function HomePage() {
+  const features = [
+    "Automated watermark and fingerprint matching for rights protection.",
+    "End-to-end media upload, ingestion, and anomaly analysis workflows.",
+    "Unified dashboard for detection events and leakage impact insights.",
+  ]
 
   return (
-    <AppShell>
-      <h1 className="title">Dashboard</h1>
-      <p className="subtitle">Personalized rights monitoring for your authority.</p>
+    <AppShell requireAuth={false}>
+      <section className="hero">
+        <div className="hero-overlay">
+          <div className="hero-content">
+            <p className="hero-kicker">Sports Rights Intelligence Platform</p>
+            <h1 className="hero-title">Take control of your sports media ecosystem</h1>
+            <p className="hero-subtitle">
+              Detect unauthorized uploads, track propagation across platforms, and quantify revenue-impacting leakage in one place.
+            </p>
+            <div className="row">
+              <Link href="/signup" className="button">
+                Get Started
+              </Link>
+              <Link href="/about" className="button secondary">
+                Learn More
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="section">
-        <div className="row">
-          <span className="badge">{authority?.name || "Authority"} ({authority?.authority_id || ""})</span>
-          <span className="badge">
-            DB: {dbHealth?.ok ? "Connected" : "Unavailable"}
-          </span>
-          <Link href="/upload-official" className="button">
-            Upload Official Media
-          </Link>
+        <h2 className="section-title">Why teams use Sports Rights Guard</h2>
+        <div className="grid-3">
+          {features.map((item) => (
+            <div className="card feature-card" key={item}>
+              <p>{item}</p>
+            </div>
+          ))}
         </div>
       </section>
 
-      <section className="section grid-3">
+      <section className="section split-callout">
         <div className="card">
-          <div className="metric-title">Total Official Media</div>
-          <div className="metric-value">{stats.totalMedia}</div>
+          <h3>For Rights Authorities</h3>
+          <p>Upload your official media library and monitor detections with verifiable watermark and fingerprint evidence.</p>
         </div>
         <div className="card">
-          <div className="metric-title">Total Detections</div>
-          <div className="metric-value">{stats.totalDetections}</div>
-        </div>
-        <div className="card">
-          <div className="metric-title">Total Leakage Views</div>
-          <div className="metric-value">{stats.totalLeakage}</div>
+          <h3>For Operations Teams</h3>
+          <p>Review unauthorized trends, prioritize incidents by leakage volume, and accelerate takedown or response workflows.</p>
         </div>
       </section>
 
-      <section className="section card">
-        <h2 style={{ marginTop: 0 }}>Official Media Library</h2>
-        {loading && <p>Loading media...</p>}
-        {!loading && (
-          <div className="list">
-            {media.map((m) => (
-              <div className="media-item" key={m.media_id}>
-                <div>
-                  <strong>{m.title}</strong>
-                  <div style={{ color: "#5a6785", marginTop: 4 }}>Media ID: {m.media_id}</div>
-                </div>
-                <span className="badge">Frames: {m.frames?.length || 0}</span>
-                <span className="badge">Watermark: {m.watermark_id.slice(0, 8)}...</span>
-                <Link href={`/media/${m.media_id}`} className="button">
-                  Open Analytics
-                </Link>
-              </div>
-            ))}
-            {!media.length && <p>No official media available.</p>}
-          </div>
-        )}
+      <section className="section card cta-strip">
+        <div>
+          <h3 style={{ margin: 0 }}>Ready to monitor and protect your media rights?</h3>
+          <p style={{ marginBottom: 0 }}>Create an authority account and start tracking uploads in minutes.</p>
+        </div>
+        <Link href="/signup" className="button">Create Account</Link>
       </section>
     </AppShell>
   )

@@ -31,11 +31,14 @@ export default function AppShell({ children, requireAuth = true }) {
     <>
       <header className="topbar">
         <div className="container topbar-inner">
-          <div className="brand">Sports Rights Guard</div>
+          <Link href="/" className="brand">Sports Rights Guard</Link>
           <nav className="nav">
-            <Link href="/">Dashboard</Link>
-            <Link href="/analytics">Analytics</Link>
-            <Link href="/upload-official">Upload Official</Link>
+            <Link href="/">Home</Link>
+            <Link href="/about">About</Link>
+            <Link href="/contact">Contact</Link>
+            {authority && <Link href="/dashboard">Dashboard</Link>}
+            {authority && <Link href="/analytics">Analytics</Link>}
+            {authority && <Link href="/upload-official">Upload Official</Link>}
             {!authority && <Link href="/login">Login</Link>}
             {!authority && <Link href="/signup">Signup</Link>}
             {authority && <button className="button secondary" onClick={onLogout}>Logout</button>}
