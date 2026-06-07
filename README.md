@@ -162,5 +162,5 @@ The smallest useful version of this system consists of:
 
 This workflow is fully functional in the current implementation and demonstrates the core value of the system.
 # If You want ready made credentials to check the flow, then they are : 
-Authority id : Testing_123 || Authority_name : Tested
+Authority id : Testing_123 || Authority_name : Tested || 
 Deployed Link of the project : https://google-solution-challenge-umber.vercel.app/
