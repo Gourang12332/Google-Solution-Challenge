@@ -32,19 +32,25 @@ def extract_frame_hashes(video_path: str, max_frames: int = 20, sample_step: int
     return frames
 
 
-def download_video(video_url: str, target_dir: str) -> str:
+def download_video(video_url: str, target_dir: str = "/tmp") -> str:
     ensure_dir(target_dir)
+
     if video_url.startswith("file://"):
         return video_url.replace("file://", "", 1)
+
     if os.path.exists(video_url):
         return video_url
-    ext = ".mp4"
+
+    ext = os.path.splitext(video_url.split("?")[0])[1] or ".mp4"
     out_path = os.path.join(target_dir, f"{uuid.uuid4().hex}{ext}")
-    with httpx.stream("GET", video_url, follow_redirects=True, timeout=60.0) as resp:
+
+    with httpx.stream("GET", video_url, follow_redirects=True, timeout=120.0) as resp:
         resp.raise_for_status()
         with open(out_path, "wb") as f:
-            for chunk in resp.iter_bytes():
-                f.write(chunk)
+            for chunk in resp.iter_bytes(chunk_size=1024 * 1024):
+                if chunk:
+                    f.write(chunk)
+
     return out_path
 
 

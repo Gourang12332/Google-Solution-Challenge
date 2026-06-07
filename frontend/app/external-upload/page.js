@@ -14,6 +14,7 @@ export default function ExternalUploadPage() {
     title: "",
     views: 0,
   })
+  const [loading, setLoading] = useState(false)
   const [inputMode, setInputMode] = useState("url")
   const [videoFile, setVideoFile] = useState(null)
   const [result, setResult] = useState("")
@@ -28,6 +29,7 @@ export default function ExternalUploadPage() {
     setResult("")
     setError("")
     try {
+      setLoading(true)
       if (inputMode === "file") {
         if (!videoFile) {
           setError("Select a video file")
@@ -61,6 +63,8 @@ export default function ExternalUploadPage() {
       }
     } catch (err) {
       setError(err?.response?.data?.detail || "External upload ingest failed")
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -100,7 +104,7 @@ export default function ExternalUploadPage() {
         </div>
         <div className="row" style={{ marginTop: 14 }}>
           <button className="button" type="submit">
-            Submit External Upload
+          {loading ? "Uploading..." : "Submit Exernal Upload"}
           </button>
           {result && <span style={{ color: "#17603a" }}>{result}</span>}
           {error && <span style={{ color: "#c01f34" }}>{error}</span>}
