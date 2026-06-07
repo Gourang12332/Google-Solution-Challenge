@@ -161,5 +161,6 @@ The smallest useful version of this system consists of:
 6. Display detections and estimated engagement leakage.
 
 This workflow is fully functional in the current implementation and demonstrates the core value of the system.
-# If u want ready made credentials to check the flow, then they are : 
+# If You want ready made credentials to check the flow, then they are : 
 Authority id : Testing_123 || Authority_name : Tested
+Deployed Link of the project : https://google-solution-challenge-umber.vercel.app/
