@@ -164,3 +164,4 @@ This workflow is fully functional in the current implementation and demonstrates
 # If You want ready made credentials to check the flow, then they are : 
 Authority id : Testing_123 || Authority_name : Tested || 
 Deployed Link of the project : https://google-solution-challenge-umber.vercel.app/
+|| Link for External uploads from unauthorized users : https://google-solution-challenge-umber.vercel.app/external-upload
