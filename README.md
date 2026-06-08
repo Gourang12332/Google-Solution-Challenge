@@ -147,6 +147,9 @@ If I were shipping this to real organizations, I would focus on production-scale
 
 The current version demonstrates the complete workflow end-to-end, while these improvements would make it suitable for large-scale production usage.
 
+### Two layer Production Level product Improvements (optional) 
+In the future, Jarvis AI Labs GPU credits could be used to add an embedding-based verification layer after the existing pHash filter, improving detection of heavily transformed videos without making every comparison GPU-dependent.
+
 ---
 
 ## Smallest Useful Version
